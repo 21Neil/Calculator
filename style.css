@@ -16,10 +16,10 @@ html {
 .calculator {
   margin-top: 100px;
   display: grid;
-  grid-template-rows: repeat(5, 100px);
-  grid-template-columns: repeat(4, 90px);
+  grid-template-rows: repeat(5, 115px);
+  grid-template-columns: repeat(4, 105px);
   border: 1px solid gray;
-  border-radius:5px;
+  border-radius: 5px;
 }
 
 .view {
@@ -30,14 +30,19 @@ html {
   font-size: 48px;
 }
 
-.num, .operate {
+.item{
   font-size: 32px; 
   background-color: rgb(201, 213, 230);
   border: 1px solid rgb(154, 168, 189);
   border-collapse: collapse;
   margin: -1px;
+  border-radius: 5px;
 }
 
-.num:hover, .operate:hover {
+.enter {
   background-color: rgb(192, 204, 221);
+}
+
+.click{
+  background-color: rgb(169, 180, 197);
 }
