@@ -20,15 +20,14 @@ body {
 .calculator {
   margin-top: 100px;
   display: grid;
-  grid-template-rows: repeat(5, 115px);
+  grid-template-rows: repeat(6, 115px);
   grid-template-columns: repeat(4, 105px);
   border: 1px solid gray;
   border-radius: 5px;
 }
 
 .view {
-  grid-column-start: 1;
-  grid-column-end: 5;
+  grid-column: span 4;
   justify-self: end;
   align-self: center;
   font-size: 48px;
@@ -49,4 +48,8 @@ body {
 
 .click{
   background-color: rgb(169, 180, 197);
+}
+
+.zero {
+  grid-column: span 2;
 }
