@@ -1,10 +1,12 @@
 const buttons = document.querySelectorAll('button')
-const numAndOperate = document.querySelectorAll('.num, .operate')
+const numBtn = document.querySelectorAll('.num')
+const operatorBtn = document.querySelectorAll('.operate')
 const clearBtn = document.querySelector('.clear')
 const backBtn = document.querySelector('.back')
 const equalBtn = document.querySelector('.equal')
 const view = document.querySelector('.view')
-let content = '';
+let num = '';
+let operator = '';
 
 function add(a, b) {
   return a + b;
@@ -61,27 +63,28 @@ function mouseUp(e) {
 }
 //----------handle button style----------
 
-numAndOperate.forEach(btn => {
-  btn.addEventListener('click', numAndOperateOnclick)
+numBtn.forEach(btn => {
+  btn.addEventListener('click', numOnclick)
 })
 
-function numAndOperateOnclick(e) {
-  if(content.length > 14) return
+function numOnclick(e) {
+  if(num.length > 14) return
   view.textContent += e.target.value
-  content += e.target.value;
+  num += e.target.value;
 }
 
 clearBtn.addEventListener('click', clear)
 
 function clear() {
   view.textContent = ''
-  content = '';
+  num = '';
 }
 
 backBtn.addEventListener('click', back);
 
 function back() {
   view.textContent = view.textContent.slice(0, view.textContent.length - 1)
-  content = content.slice(0, content.length - 1);
-  console.log(content)
+  num = num.slice(0, num.length - 1);
 }
+
+equalBtn.addEventListener('click', operate)
