@@ -85,8 +85,15 @@ function clear() {
 backBtn.addEventListener('click', back);
 
 function back() {
-  view.textContent = view.textContent.slice(0, view.textContent.length - 1);
-  num1 = num1.slice(0, num1.length - 1);
+  if(num1 === ''){
+    num2 = num2.toString()
+    num2 = num2.slice(0, num2.length - 1);
+    view.textContent = num2;
+  } else {
+    num1 = num1.toString()
+    num1 = num1.slice(0, num1.length - 1);
+    view.textContent = num1;
+  }
 }
 
 operatorBtn.forEach(btn => {
@@ -98,11 +105,11 @@ function operatorBtnOnclick(e) {
     num2 = num1;
     num1 = '';
     view.textContent = num2;
-  } else {
+  } else if (num1 !== '') {
     let answer = operate(operator, +num2, +num1);
-    view.textContent = answer;
     num1 = ''
     num2 = answer
+    view.textContent = num2;
   }
   operator = e.target.value;
 }
@@ -110,8 +117,10 @@ function operatorBtnOnclick(e) {
 equalBtn.addEventListener('click', getAnswer);
 
 function getAnswer() {
+  if(num1 === '' || num2 === '' || operator === '') return
   let answer = operate(operator, +num2, +num1);
-  view.textContent = answer;
-  num1 = answer
-  num2 = ''
+  num1 = ''
+  num2 = answer
+  operator = '';
+  view.textContent = num2;
 }
