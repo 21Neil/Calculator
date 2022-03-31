@@ -5,6 +5,7 @@ const clearBtn = document.querySelector('.clear');
 const backBtn = document.querySelector('.back');
 const equalBtn = document.querySelector('.equal');
 const view = document.querySelector('.view');
+const dotBtn = document.querySelector('.dot')
 let num1 = '';
 let operator = '';
 let num2 = '';
@@ -127,4 +128,13 @@ function getAnswer() {
   num2 = answer
   operator = '';
   view.textContent = num2;
+}
+
+dotBtn.addEventListener('click', dotOnclick)
+
+function dotOnclick(e) {
+  if (num1.length > 14) return;
+  if(num1.includes('.'))return;
+  num1 += e.target.value;
+  view.textContent = num1;
 }
