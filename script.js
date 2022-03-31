@@ -6,6 +6,7 @@ const backBtn = document.querySelector('.back');
 const equalBtn = document.querySelector('.equal');
 const view = document.querySelector('.view');
 const dotBtn = document.querySelector('.dot');
+const plusMinus = document.querySelector('.plus-minus');
 let num1 = '';
 let num2 = '';
 let operator = '';
@@ -75,7 +76,8 @@ numBtn.forEach(btn => {
 
 function numOnclick(e) {
   if (num1.length > 14) return;
-  if (view.textContent === '0' && e.target.value === '0') return 
+  if (view.textContent === '0' && e.target.value === '0') return;
+  if (view.textContent !== '0' && num1 === '' && e.target.value === '0') return;
   num1 += e.target.value;
   view.textContent = num1;
 }
@@ -172,4 +174,32 @@ function toE(raw) {
   }
   answer = `≈${answer}E${long}`;
   return answer;
+}
+
+plusMinus.addEventListener('click', plusMinusOnclick);
+
+function plusMinusOnclick() {
+  if(num1 === ''){
+    if (num2 > 0) {
+      num2 = -num2;
+      view.textContent = num2;
+      return
+    }
+    if (num2 < 0) {
+      num2 = Math.abs(num2);
+      view.textContent = num2;
+      return
+    }
+  } else {
+    if (num1 > 0) {
+      num1 = -num1;
+      view.textContent = num1;
+      return
+    }
+    if (num1 < 0) {
+      num1 = Math.abs(num1);
+      view.textContent = num1;
+      return
+    }
+  }
 }
