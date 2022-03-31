@@ -105,10 +105,14 @@ function operatorBtnOnclick(e) {
     num2 = num1;
     num1 = '';
     view.textContent = num2;
-  } else if (num1 !== '') {
+  } else if (num1 !== '' && operator !== '') {
     let answer = operate(operator, +num2, +num1);
     num1 = ''
     num2 = answer
+    view.textContent = num2;
+  } else if(operator === '' && num1 !== '') {
+    num2 = num1;
+    num1 = ''
     view.textContent = num2;
   }
   operator = e.target.value;
