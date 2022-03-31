@@ -5,7 +5,7 @@ const clearBtn = document.querySelector('.clear');
 const backBtn = document.querySelector('.back');
 const equalBtn = document.querySelector('.equal');
 const view = document.querySelector('.view');
-const dotBtn = document.querySelector('.dot')
+const dotBtn = document.querySelector('.dot');
 let num1 = '';
 let operator = '';
 let num2 = '';
@@ -23,8 +23,8 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  if(b === 0){
-    return '👻'
+  if (b === 0) {
+    return '👻';
   }
   return a / b;
 }
@@ -89,12 +89,12 @@ function clear() {
 backBtn.addEventListener('click', back);
 
 function back() {
-  if(num1 === ''){
-    num2 = num2.toString()
+  if (num1 === '') {
+    num2 = num2;
     num2 = num2.slice(0, num2.length - 1);
     view.textContent = num2;
   } else {
-    num1 = num1.toString()
+    num1 = num1;
     num1 = num1.slice(0, num1.length - 1);
     view.textContent = num1;
   }
@@ -110,13 +110,16 @@ function operatorBtnOnclick(e) {
     num1 = '';
     view.textContent = num2;
   } else if (num1 !== '' && operator !== '') {
-    let answer = operate(operator, +num2, +num1);
-    num1 = ''
-    num2 = answer
-    view.textContent = num2;
-  } else if(operator === '' && num1 !== '') {
+    let answer = operate(operator, +num2, +num1).toString();
+    num2 = answer;
+    if (answer.length > 14) {
+      answer = toE(answer);
+    }
+    num1 = '';
+    view.textContent = answer;
+  } else if (operator === '' && num1 !== '') {
     num2 = num1;
-    num1 = ''
+    num1 = '';
     view.textContent = num2;
   }
   operator = e.target.value;
@@ -125,19 +128,40 @@ function operatorBtnOnclick(e) {
 equalBtn.addEventListener('click', getAnswer);
 
 function getAnswer() {
-  if(num1 === '' || num2 === '' || operator === '') return
-  let answer = operate(operator, +num2, +num1);
-  num1 = ''
-  num2 = answer
+  if (num1 === '' || num2 === '' || operator === '') return;
+  let answer = operate(operator, +num2, +num1).toString();
+  num2 = answer;
+  if (answer.length > 14) {
+    answer = toE(answer);
+  }
+  num1 = '';
   operator = '';
-  view.textContent = num2;
+  view.textContent = answer;
 }
 
-dotBtn.addEventListener('click', dotOnclick)
+dotBtn.addEventListener('click', dotOnclick);
 
 function dotOnclick(e) {
   if (num1.length > 14) return;
-  if(num1.includes('.'))return;
+  if (num1.includes('.')) return;
   num1 += e.target.value;
   view.textContent = num1;
+}
+
+function toE(raw) {
+  if (raw.includes('e')) {
+    answer = +raw.slice(0, raw.indexOf('e'))
+    long = raw.slice(raw.indexOf('+') + 1, raw.length)
+  } else {
+    answer = raw / Math.pow(10, raw.length - 1);
+    long = raw.toString().length - 1
+  }
+  answer = answer.toFixed(9)
+  if(answer >= 10) {
+    answer /= 10;
+    long = +long
+    long += 1
+  }
+  answer = `≈${answer}E${long}`;
+  return answer;
 }
