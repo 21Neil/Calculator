@@ -7,8 +7,9 @@ const equalBtn = document.querySelector('.equal');
 const view = document.querySelector('.view');
 const dotBtn = document.querySelector('.dot');
 let num1 = '';
-let operator = '';
 let num2 = '';
+let operator = '';
+view.textContent = '0';
 
 function add(a, b) {
   return a + b;
@@ -74,6 +75,7 @@ numBtn.forEach(btn => {
 
 function numOnclick(e) {
   if (num1.length > 14) return;
+  if (view.textContent === '0' && e.target.value === '0') return 
   num1 += e.target.value;
   view.textContent = num1;
 }
@@ -81,7 +83,7 @@ function numOnclick(e) {
 clearBtn.addEventListener('click', clear);
 
 function clear() {
-  view.textContent = '';
+  view.textContent = '0';
   num1 = '';
   num2 = '';
 }
@@ -144,23 +146,29 @@ dotBtn.addEventListener('click', dotOnclick);
 function dotOnclick(e) {
   if (num1.length > 14) return;
   if (num1.includes('.')) return;
-  num1 += e.target.value;
-  view.textContent = num1;
+  if (view.textContent === '0' || num1 === '') {
+    num1 = '0';
+    num1 += e.target.value;
+    view.textContent = num1;
+  } else {
+    num1 += e.target.value;
+    view.textContent = num1;
+  }
 }
 
 function toE(raw) {
   if (raw.includes('e')) {
-    answer = +raw.slice(0, raw.indexOf('e'))
-    long = raw.slice(raw.indexOf('+') + 1, raw.length)
+    answer = +raw.slice(0, raw.indexOf('e'));
+    long = raw.slice(raw.indexOf('+') + 1, raw.length);
   } else {
     answer = raw / Math.pow(10, raw.length - 1);
-    long = raw.toString().length - 1
+    long = raw.toString().length - 1;
   }
-  answer = answer.toFixed(9)
-  if(answer >= 10) {
+  answer = answer.toFixed(9);
+  if (answer >= 10) {
     answer /= 10;
-    long = +long
-    long += 1
+    long = +long;
+    long += 1;
   }
   answer = `≈${answer}E${long}`;
   return answer;
