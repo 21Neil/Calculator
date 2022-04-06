@@ -13,22 +13,22 @@ let operator = '';
 view.textContent = '0';
 
 function add(a, b) {
-  return a + b;
+  return new BigNumber(a).plus(b)
 }
 
 function subtract(a, b) {
-  return a - b;
+  return new BigNumber(a).minus(b);
 }
 
 function multiply(a, b) {
-  return a * b;
+  return new BigNumber(a).multipliedBy(b);
 }
 
 function divide(a, b) {
   if (b === 0) {
     return '👻';
   }
-  return a / b;
+  return new BigNumber(a).div(b);
 }
 
 function operate(operate, num1, num2) {
@@ -77,7 +77,11 @@ numBtn.forEach(btn => {
 function numOnclick(e) {
   if (num1.length > 14) return;
   if (view.textContent === '0' && e.target.value === '0') return;
-  if (view.textContent !== '0' && num1 === '' && e.target.value === '0') return;
+  if (view.textContent !== '0' && num1 === '' && e.target.value === '0') {
+    num1 = '0'
+    view.textContent = '0'
+    return;
+  }
   num1 += e.target.value;
   view.textContent = num1;
 }
@@ -116,8 +120,10 @@ function operatorBtnOnclick(e) {
   } else if (num1 !== '' && operator !== '') {
     let answer = operate(operator, +num2, +num1).toString();
     num2 = answer;
-    if (answer.length > 14) {
+    if (answer.length > 14 && !answer.includes('.')) {
       answer = toE(answer);
+    } else if (answer.length > 14 && answer.includes('.')) {
+      answer = `≈${parseFloat((+answer).toFixed(14 - answer.indexOf('.')))}`
     }
     num1 = '';
     view.textContent = answer;
@@ -135,8 +141,10 @@ function getAnswer() {
   if (num1 === '' || num2 === '' || operator === '') return;
   let answer = operate(operator, +num2, +num1).toString();
   num2 = answer;
-  if (answer.length > 14) {
+  if (answer.length > 14 && !answer.includes('.')) {
     answer = toE(answer);
+  } else if (answer.length > 14 && answer.includes('.')) {
+    answer = `≈${parseFloat((+answer).toFixed(14 - answer.indexOf('.')))}`
   }
   num1 = '';
   operator = '';
