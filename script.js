@@ -97,6 +97,7 @@ function clear() {
 backBtn.addEventListener('click', backOnclick);
 
 function backOnclick() {
+  if(view.textContent === '0' && num1 === '') return
   if (num1 === '') {
     num2 = num2;
     num2 = num2.slice(0, num2.length - 1);
@@ -106,6 +107,7 @@ function backOnclick() {
     num1 = num1.slice(0, num1.length - 1);
     view.textContent = num1;
   }
+  if(view.textContent === '' && num1 === '') view.textContent = '0';
 }
 
 operatorBtn.forEach(btn => {
@@ -113,6 +115,7 @@ operatorBtn.forEach(btn => {
 });
 
 function operatorBtnOnclick(e) {
+  if(view.textContent === '0' && num1 === '') return
   if (num2 === '') {
     num2 = num1;
     num1 = '';
