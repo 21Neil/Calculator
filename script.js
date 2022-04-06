@@ -13,7 +13,7 @@ let operator = '';
 view.textContent = '0';
 
 function add(a, b) {
-  return new BigNumber(a).plus(b)
+  return new BigNumber(a).plus(b);
 }
 
 function subtract(a, b) {
@@ -78,8 +78,8 @@ function numOnclick(e) {
   if (num1.length > 14) return;
   if (view.textContent === '0' && e.target.value === '0') return;
   if (view.textContent !== '0' && num1 === '' && e.target.value === '0') {
-    num1 = '0'
-    view.textContent = '0'
+    num1 = '0';
+    view.textContent = '0';
     return;
   }
   num1 += e.target.value;
@@ -94,9 +94,9 @@ function clear() {
   num2 = '';
 }
 
-backBtn.addEventListener('click', back);
+backBtn.addEventListener('click', backOnclick);
 
-function back() {
+function backOnclick() {
   if (num1 === '') {
     num2 = num2;
     num2 = num2.slice(0, num2.length - 1);
@@ -123,7 +123,7 @@ function operatorBtnOnclick(e) {
     if (answer.length > 14 && !answer.includes('.')) {
       answer = toE(answer);
     } else if (answer.length > 14 && answer.includes('.')) {
-      answer = `≈${parseFloat((+answer).toFixed(14 - answer.indexOf('.')))}`
+      answer = `≈${parseFloat((+answer).toFixed(14 - answer.indexOf('.')))}`;
     }
     num1 = '';
     view.textContent = answer;
@@ -144,7 +144,7 @@ function getAnswer() {
   if (answer.length > 14 && !answer.includes('.')) {
     answer = toE(answer);
   } else if (answer.length > 14 && answer.includes('.')) {
-    answer = `≈${parseFloat((+answer).toFixed(14 - answer.indexOf('.')))}`
+    answer = `≈${parseFloat((+answer).toFixed(14 - answer.indexOf('.')))}`;
   }
   num1 = '';
   operator = '';
@@ -187,27 +187,56 @@ function toE(raw) {
 plusMinus.addEventListener('click', plusMinusOnclick);
 
 function plusMinusOnclick() {
-  if(num1 === ''){
+  if (num1 === '') {
     if (num2 > 0) {
       num2 = -num2;
       view.textContent = num2;
-      return
+      return;
     }
     if (num2 < 0) {
       num2 = Math.abs(num2);
       view.textContent = num2;
-      return
+      return;
     }
   } else {
     if (num1 > 0) {
       num1 = -num1;
       view.textContent = num1;
-      return
+      return;
     }
     if (num1 < 0) {
       num1 = Math.abs(num1);
       view.textContent = num1;
-      return
+      return;
     }
+  }
+}
+
+window.addEventListener('keydown', enterNumber);
+
+function enterNumber(e) {
+  const num = document.querySelector(`.num[key="${e.key}"]`);
+  const operator = document.querySelector(`.operate[key="${e.key}"]`);
+  const equal = document.querySelector(`.equal[key="${e.key}"]`);
+  const dot = document.querySelector(`.dot[key="${e.key}"]`);
+  const back = document.querySelector(`.back[key="${e.key}"]`);
+  if (!num && !operator && !equal && !dot && !back) return;
+  if (num) {
+    let target = num;
+    numOnclick({ target });
+  }
+  if (operator) {
+    let target = operator;
+    operatorBtnOnclick({ target });
+  }
+  if (equal) {
+    getAnswer();
+  }
+  if (dot) {
+    let target = dot;
+    dotOnclick({ target });
+  }
+  if (back) {
+    backOnclick();
   }
 }
