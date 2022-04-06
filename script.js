@@ -212,9 +212,10 @@ function plusMinusOnclick() {
   }
 }
 
-window.addEventListener('keydown', enterNumber);
+window.addEventListener('keydown', keyBoard);
+window.addEventListener('keyup', keyBoardUp);
 
-function enterNumber(e) {
+function keyBoard(e) {
   const num = document.querySelector(`.num[key="${e.key}"]`);
   const operator = document.querySelector(`.operate[key="${e.key}"]`);
   const equal = document.querySelector(`.equal[key="${e.key}"]`);
@@ -224,19 +225,48 @@ function enterNumber(e) {
   if (num) {
     let target = num;
     numOnclick({ target });
+    num.classList.add('click');
   }
   if (operator) {
     let target = operator;
     operatorBtnOnclick({ target });
+    operator.classList.add('click');
   }
   if (equal) {
     getAnswer();
+    equal.classList.add('click');
   }
   if (dot) {
     let target = dot;
     dotOnclick({ target });
+    dot.classList.add('click');
   }
   if (back) {
     backOnclick();
+    back.classList.add('click');
+  }
+}
+
+function keyBoardUp(e) {
+  const num = document.querySelector(`.num[key="${e.key}"]`);
+  const operator = document.querySelector(`.operate[key="${e.key}"]`);
+  const equal = document.querySelector(`.equal[key="${e.key}"]`);
+  const dot = document.querySelector(`.dot[key="${e.key}"]`);
+  const back = document.querySelector(`.back[key="${e.key}"]`);
+  if (!num && !operator && !equal && !dot && !back) return;
+  if (num) {
+    num.classList.remove('click');
+  }
+  if (operator) {
+    operator.classList.remove('click');
+  }
+  if (equal) {
+    equal.classList.remove('click');
+  }
+  if (dot) {
+    dot.classList.remove('click');
+  }
+  if (back) {
+    back.classList.remove('click');
   }
 }
